@@ -1,10 +1,10 @@
 package net.masterthought.cucumber.generators;
 
-import org.apache.velocity.app.event.ReferenceInsertionEventHandler;
-import org.junit.Test;
-
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.apache.velocity.app.event.ReferenceInsertionEventHandler;
+import org.junit.Test;
 
 /**
  * @author M.P. Korstanje (mpkorstanje@github)
@@ -34,7 +34,14 @@ public class EscapeHtmlReferenceTest {
     @Test
     public void referenceInsert_shouldSanitize(){
         String html = "<a href=\"www.example.com\" rel=\"nofollow noopener noreferrer\">a hyper web reference</a>";
+        String img = "<img src=\"screenshot.png\" />";
+        String span = "<span style=\"background-color: #66CCEE;\">some text</span>";
+
         assertThat(insertionEventHandler.referenceInsert("$_sanitize_" + SOME_REFERENCE, html))
                 .isEqualTo(html);
+        assertThat(insertionEventHandler.referenceInsert("$_sanitize_" + SOME_REFERENCE, img))
+                .isEqualTo(img);
+        assertThat(insertionEventHandler.referenceInsert("$_sanitize_" + SOME_REFERENCE, span))
+                .isEqualTo(span);
     }
 }
