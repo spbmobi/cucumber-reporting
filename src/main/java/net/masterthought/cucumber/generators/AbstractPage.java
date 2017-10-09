@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.app.event.EventCartridge;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import net.masterthought.cucumber.Configuration;
@@ -91,9 +90,9 @@ public abstract class AbstractPage {
 
     private void buildGeneralParameters() {
         // to escape html and xml
-        EventCartridge ec = new EventCartridge();
+/*      EventCartridge ec = new EventCartridge();
         ec.addEventHandler(new EscapeHtmlReference());
-        context.attachEventCartridge(ec);
+        context.attachEventCartridge(ec);*/
 
         // to provide unique ids for elements on each page
         context.put("counter", new Counter());

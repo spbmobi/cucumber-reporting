@@ -12,13 +12,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import net.masterthought.cucumber.generators.AbstractPage;
 import net.masterthought.cucumber.generators.ErrorPage;
@@ -40,7 +41,7 @@ public class ReportBuilder {
      * Page that should be displayed when the reports is generated. Shared between {@link FeaturesOverviewPage} and
      * {@link ErrorPage}.
      */
-    public static final String HOME_PAGE = "overview-features.html";
+    public static final String HOME_PAGE = "feature-overview.html";
 
     /**
      * Subdirectory where the report will be created.
