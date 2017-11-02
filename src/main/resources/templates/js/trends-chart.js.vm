@@ -188,7 +188,7 @@ $(document).ready(function() {
                 data: pendingSteps,
                 fill: true,
                 lineTension: 0.1,
-                backgroundColor: "#F5F28F",
+                backgroundColor: "#EAD53E",
                 borderCapStyle: "butt",
                 borderDash: [],
                 borderDashOffset: 0.0,

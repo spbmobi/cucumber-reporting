@@ -20,7 +20,7 @@ $(document).ready(function() {
             },
             {
                 label: "Pending",
-                backgroundColor: "#F5F28F",
+                backgroundColor: "#EAD53E",
                 data: #numberArray($chart_data[3])
             },
             {

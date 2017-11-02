@@ -16,6 +16,7 @@ public class OverviewReport implements Reportable {
     private final StatusCounter stepsCounter = new StatusCounter();
 
     public void incFeaturesFor(Status status) {
+
         this.featuresCounter.incrementFor(status);
     }
 

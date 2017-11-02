@@ -53,25 +53,6 @@ public class FeatureReportPageIntegrationTest extends PageTest {
     }
 
     @Test
-    public void generatePage_generatesStatsTableBody() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-        final Feature feature = features.get(0);
-        page = new FeatureReportPage(reportResult, configuration, feature);
-
-        // when
-        page.generatePage();
-
-        // then
-        DocumentAssertion document = documentFrom(page.getWebPage());
-        TableRowAssertion bodyRow = document.getReport().getTableStats().getBodyRow();
-
-        bodyRow.hasExactValues(feature.getName(), "10", "0", "0", "0", "0", "10", "1", "0", "1", "1m 39s 263ms", "Passed");
-        bodyRow.hasExactCSSClasses("tagname", "passed", "", "", "", "", "total", "passed", "", "total", "duration", "passed");
-    }
-
-    @Test
     public void generatePage_generatesFeatureDetails() {
 
         // given

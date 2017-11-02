@@ -8,7 +8,6 @@ import net.masterthought.cucumber.generators.TagsOverviewPage;
 import net.masterthought.cucumber.generators.integrations.helpers.DocumentAssertion;
 import net.masterthought.cucumber.generators.integrations.helpers.LeadAssertion;
 import net.masterthought.cucumber.generators.integrations.helpers.SummaryAssertion;
-import net.masterthought.cucumber.generators.integrations.helpers.TableRowAssertion;
 import net.masterthought.cucumber.generators.integrations.helpers.WebAssertion;
 
 /**
@@ -91,84 +90,6 @@ public class TagsOverviewPageIntegrationTest extends PageTest {
         assertThat(document.html()).contains("data:  [ 6.25,  0.00,  0.00, ]");
         assertThat(document.html()).contains("data:  [ 12.50,  0.00,  0.00, ]");
 
-    }
-
-    @Test
-    public void generatePage_generatesStatsTableHeader() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-        page = new TagsOverviewPage(reportResult, configuration);
-
-        // when
-        page.generatePage();
-
-        // then
-        DocumentAssertion document = documentFrom(page.getWebPage());
-        TableRowAssertion[] headerRows = document.getReport().getTableStats().getHeaderRows();
-
-        assertThat(headerRows).hasSize(2);
-
-        TableRowAssertion firstRow = headerRows[0];
-        firstRow.hasExactValues("", "Steps", "Scenarios", "Features");
-
-        TableRowAssertion secondRow = headerRows[1];
-        secondRow.hasExactValues("Tag", "Passed", "Failed", "Skipped", "Pending", "Undefined", "Total",
-                "Passed", "Failed", "Total", "Duration", "Status");
-    }
-
-    @Test
-    public void generatePage_generatesStatsTableBody() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-        page = new TagsOverviewPage(reportResult, configuration);
-
-        // when
-        page.generatePage();
-
-        // then
-        DocumentAssertion document = documentFrom(page.getWebPage());
-        TableRowAssertion[] bodyRows = document.getReport().getTableStats().getBodyRows();
-
-        assertThat(bodyRows).hasSize(3);
-
-        TableRowAssertion firstRow = bodyRows[0];
-        firstRow.hasExactValues("@checkout", "10", "1", "2", "1", "2", "16", "1", "1", "2", "231ms", "Failed");
-        firstRow.hasExactCSSClasses("tagname", "passed", "failed", "skipped", "pending", "undefined", "total", "passed", "failed", "total", "duration", "failed");
-        firstRow.hasExactDataValues("", "", "", "", "", "", "", "", "", "", "231054778", "");
-        firstRow.getReportLink().hasLabelAndAddress("@checkout", "report-tag_checkout.html");
-
-        TableRowAssertion secondRow = bodyRows[1];
-        secondRow.hasExactValues("@fast", "6", "0", "0", "0", "0", "6", "1", "0", "1", "139ms", "Passed");
-        secondRow.hasExactCSSClasses("tagname", "passed", "", "", "", "", "total", "passed", "", "total", "duration", "passed");
-        secondRow.hasExactDataValues("", "", "", "", "", "", "", "", "", "", "139004778", "");
-        secondRow.getReportLink().hasLabelAndAddress("@fast", "report-tag_fast.html");
-
-        TableRowAssertion lastRow = bodyRows[2];
-        lastRow.hasExactValues("@featureTag", "6", "0", "0", "0", "0", "6", "1", "0", "1", "139ms", "Passed");
-        lastRow.hasExactCSSClasses("tagname", "passed", "", "", "", "", "total", "passed", "", "total", "duration", "passed");
-        lastRow.hasExactDataValues("", "", "", "", "", "", "", "", "", "", "139004778", "");
-        lastRow.getReportLink().hasLabelAndAddress("@featureTag", "report-tag_featureTag.html");
-    }
-
-    @Test
-    public void generatePage_generatesStatsTableFooter() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-        page = new TagsOverviewPage(reportResult, configuration);
-
-        // when
-        page.generatePage();
-
-        // then
-        DocumentAssertion document = documentFrom(page.getWebPage());
-        TableRowAssertion[] footerRows = document.getReport().getTableStats().getAllFooterRows();
-
-        assertThat(footerRows).hasSize(2);
-        footerRows[0].hasExactValues("", "22", "1", "2", "1", "2", "28", "3", "1", "4", "509ms", "3");
-        footerRows[1].hasExactValues("", "78.57%", "3.57%", "7.14%", "3.57%", "7.14%", "", "75.00%", "25.00%", "", "", "50.00%");
     }
 
     @Test

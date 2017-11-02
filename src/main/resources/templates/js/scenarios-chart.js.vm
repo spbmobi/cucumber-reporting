@@ -9,7 +9,13 @@ $(document).ready(function() {
             backgroundColor: [
                 "#00B000",
                 "#FF3030"
-            ]
+            ],
+            datalabels: {
+            	anchor: [
+            		'start',
+            		'start'
+            	]
+            }
         }],
         labels: [
             "Passed",
@@ -22,14 +28,27 @@ $(document).ready(function() {
         type: "doughnut",
         data: chartData,
         options: {
+			plugins: {
+				datalabels: {
+					backgroundColor: function(context) {
+						return context.dataset.backgroundColor;
+					},
+					borderColor: 'white',
+					borderRadius: 25,
+					borderWidth: 2,
+					color: 'white',
+					font: {
+						size: 20,
+						weight: 'bold'
+					}
+				}
+			},
             title: {
                 display: true,
                 fontSize: 20,
                 text: "Scenarios"
             },
-            circumference: Math.PI,
             rotation: Math.PI,
-            cutoutPercentage: 70,
             responsive: true,
             legend: {
                 display: false

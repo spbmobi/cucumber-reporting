@@ -100,21 +100,4 @@ public class StepsOverviewPageIntegrationTest extends PageTest {
         TableRowAssertion secondRow = bodyRows[3];
         secondRow.hasExactDataValues("", "", "90000000", "45000000", "");
     }
-
-    @Test
-    public void generatePage_generatesStatsTableFooter() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-        page = new StepsOverviewPage(reportResult, configuration);
-
-        // when
-        page.generatePage();
-
-        // then
-        DocumentAssertion document = documentFrom(page.getWebPage());
-        TableRowAssertion footerCells = document.getReport().getTableStats().getFooterRow();
-
-        footerCells.hasExactValues("16", "23", "1m 39s 492ms", "4s 325ms", "Totals");
-    }
 }

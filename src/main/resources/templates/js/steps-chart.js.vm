@@ -13,9 +13,18 @@ $(document).ready(function() {
                 "#00B000",
                 "#FF3030",
                 "#88AAFF",
-                "#F5F28F",
+                "#EAD53E",
                 "#F5B975"
-            ]
+            ],
+			datalabels: {
+				anchor: [
+					'start',
+					'start',
+					'center',
+					'center',
+					'end'
+				]
+			}
         }],
         labels: [
             "Passed",
@@ -31,6 +40,21 @@ $(document).ready(function() {
         type: "doughnut",
         data: chartData,
         options: {
+        	plugins: {
+				datalabels: {
+					backgroundColor: function(context) {
+						return context.dataset.backgroundColor;
+					},
+					borderColor: 'white',
+					borderRadius: 25,
+					borderWidth: 2,
+					color: 'white',
+					font: {
+						size: 20,
+						weight: 'bold'
+					}
+				}
+			},
             title: {
                 display: true,
                 fontSize: 20,

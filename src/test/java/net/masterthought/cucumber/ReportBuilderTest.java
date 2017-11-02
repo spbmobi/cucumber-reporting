@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import mockit.Deencapsulation;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -25,6 +24,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import mockit.Deencapsulation;
 import net.masterthought.cucumber.generators.AbstractPage;
 import net.masterthought.cucumber.generators.OverviewReport;
 import net.masterthought.cucumber.json.Feature;
@@ -175,7 +175,7 @@ public class ReportBuilderTest extends ReportGenerator {
 
         // then
         Collection<File> files = FileUtils.listFiles(reportDirectory, null, true);
-        assertThat(files).hasSize(21);
+        assertThat(files).hasSize(22);
     }
 
     @Test

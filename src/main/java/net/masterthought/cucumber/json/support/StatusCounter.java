@@ -36,8 +36,7 @@ public class StatusCounter {
         final int statusCounter = getValueFor(status) + 1;
         this.counter.put(status, statusCounter);
         size++;
-
-        if (finalStatus == Status.PASSED && status != Status.PASSED) {
+        if (finalStatus == Status.PASSED && (status == Status.FAILED || status == Status.UNDEFINED)) {
             finalStatus = Status.FAILED;
         }
     }
