@@ -45,6 +45,9 @@ $(document).ready(function() {
 					backgroundColor: function(context) {
 						return context.dataset.backgroundColor;
 					},
+					display: function(context) {
+						return context.dataset.data;
+					},
 					borderColor: 'white',
 					borderRadius: 25,
 					borderWidth: 2,
