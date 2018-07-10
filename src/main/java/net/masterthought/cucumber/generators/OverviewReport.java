@@ -46,7 +46,7 @@ public class OverviewReport implements Reportable {
 
     @Override
     public int getPassedScenarios() {
-        return scenariosCounter.getValueFor(Status.PASSED);
+        return scenariosCounter.getValueFor(Status.PASSED) + scenariosCounter.getValueFor(Status.PENDING);
     }
 
     @Override

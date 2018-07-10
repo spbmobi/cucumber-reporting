@@ -3,8 +3,9 @@ package net.masterthought.cucumber.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang.StringUtils;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.Reportable;
@@ -139,7 +140,7 @@ public class Feature implements Reportable, Durationable {
 
     @Override
     public int getPassedScenarios() {
-        return elementsCounter.getValueFor(Status.PASSED);
+        return elementsCounter.getValueFor(Status.PASSED) + elementsCounter.getValueFor(Status.PENDING);
     }
 
     @Override

@@ -93,7 +93,7 @@ public class TagObject implements Reportable {
 
     @Override
     public int getPassedScenarios() {
-        return elementsStatusCounter.getValueFor(Status.PASSED);
+        return elementsStatusCounter.getValueFor(Status.PASSED) + elementsStatusCounter.getValueFor(Status.PENDING);
     }
 
     @Override

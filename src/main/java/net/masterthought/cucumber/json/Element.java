@@ -116,7 +116,7 @@ public class Element implements Durationable {
 
     private Status calculateElementStatus() {
         StatusCounter statusCounter = new StatusCounter();
-        statusCounter.incrementFor(stepsStatus);
+        statusCounter.incrementWithPendingFor(stepsStatus);
         statusCounter.incrementFor(beforeStatus);
         statusCounter.incrementFor(afterStatus);
         return statusCounter.getFinalStatus();
@@ -126,7 +126,7 @@ public class Element implements Durationable {
         StatusCounter statusCounter = new StatusCounter();
         for (Step step : steps) {
             Result result = step.getResult();
-            statusCounter.incrementFor(result.getStatus());
+            statusCounter.incrementWithPendingFor(result.getStatus());
             duration += result.getDuration();
         }
         return statusCounter.getFinalStatus();

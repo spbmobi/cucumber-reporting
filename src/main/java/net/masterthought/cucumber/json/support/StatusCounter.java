@@ -32,6 +32,22 @@ public class StatusCounter {
      * @param status
      *            finalStatus for which the counter should be incremented.
      */
+    public void incrementWithPendingFor(Status status) {
+        final int statusCounter = getValueFor(status) + 1;
+        this.counter.put(status, statusCounter);
+        size++;
+        if (finalStatus == Status.PASSED) {
+            switch (status){
+                case FAILED:
+                case UNDEFINED:
+                    finalStatus = Status.FAILED;
+                    break;
+                case PENDING:
+                    finalStatus = Status.PENDING;
+            }
+        }
+    }
+
     public void incrementFor(Status status) {
         final int statusCounter = getValueFor(status) + 1;
         this.counter.put(status, statusCounter);

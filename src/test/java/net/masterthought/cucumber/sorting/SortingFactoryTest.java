@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import mockit.Deencapsulation;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import mockit.Deencapsulation;
 import net.masterthought.cucumber.generators.integrations.PageTest;
 import net.masterthought.cucumber.json.Feature;
 import net.masterthought.cucumber.json.support.StepObject;
@@ -55,21 +55,6 @@ public class SortingFactoryTest extends PageTest {
     }
 
     @Test
-    public void sortFeatures_OnINVALID_ThrowsException() {
-
-        // given
-        // INVALID is available only for test profile and the reason of this shadow Enum in test profile is
-        // to be able to test default: block which throws an exception for unsupported values
-        SortingFactory sortingFactory = new SortingFactory(SortingMethod.INVALID);
-
-        // when
-        // then
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(buildErrorMessage());
-        sortingFactory.sortFeatures(features);
-    }
-
-    @Test
     public void sortTags_OnNATURAL_ReturnsSameList() {
 
         // given
@@ -94,19 +79,6 @@ public class SortingFactoryTest extends PageTest {
 
         // then
         assertThat(tagObjects).containsExactly(tags.get(0), tags.get(1), tags.get(2));
-    }
-
-    @Test
-    public void sortTags_OnINVALID_ThrowsException() {
-
-        // given
-        SortingFactory sortingFactory = new SortingFactory(SortingMethod.INVALID);
-
-        // when
-        // then
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(buildErrorMessage());
-        sortingFactory.sortTags(tags);
     }
 
     @Test
@@ -141,20 +113,6 @@ public class SortingFactoryTest extends PageTest {
     }
 
     @Test
-    public void sortSteps_OnINVALID_ThrowsException() {
-
-        // given
-        SortingMethod sortingMethod = SortingMethod.INVALID;
-        SortingFactory sortingFactory = new SortingFactory(sortingMethod);
-
-        // when
-        // then
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage(buildErrorMessage());
-        sortingFactory.sortSteps(steps);
-    }
-
-    @Test
     public void createUnknownMethodException_CreatesException() {
 
         // given
@@ -166,9 +124,5 @@ public class SortingFactoryTest extends PageTest {
 
         // then
         assertThat(e).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("Unsupported sorting method: " + invalidSorthingMethod);
-    }
-
-    private String buildErrorMessage() {
-        return "Unsupported sorting method: " + SortingMethod.INVALID;
     }
 }
