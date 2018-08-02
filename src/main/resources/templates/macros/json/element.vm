@@ -12,15 +12,25 @@
   #includeDuration($element)
 
   #set($elementId = $counter.next())
-  <span data-toggle="collapse" class="#if ($element.getStatus().isPassed()) collapsed #end collapsable-control" data-target="#element-$elementId">
+
+  #set($isHavingWarnings = false)
+  #foreach($step in $element.getSteps())
+  	#foreach($output in $step.getOutputs())
+  	  #foreach($_sanitize_message in $output.getMessages())
+  	    #if ($_sanitize_message.contains(" WARN ")) #set($isHavingWarnings = true) #end
+	    #end
+	  #end
+  #end
+
+  <span data-toggle="collapse" class="#if ($element.getStatus().isPassed() && !$isHavingWarnings) collapsed #end collapsable-control" data-target="#element-$elementId">
     #includeBrief($element.getKeyword(), $element.getStatus(), $element.getName(), true)
   </span>
   <div class="description indention">$element.getDescription()</div>
 
-  <div id="element-$elementId" class="collapse collapsable-details #if(!$element.getStatus().isPassed()) in #end">
+  <div id="element-$elementId" class="collapse collapsable-details #if(!$element.getStatus().isPassed() || $isHavingWarnings) in #end">
     #includeHooks("Before", $element.getBefore(), $element.getBeforeStatus())
 
-    #includeSteps($element.getSteps())
+    #includeSteps($element.getSteps(), $isHavingWarnings)
 
     #includeHooks("After", $element.getAfter(), $element.getAfterStatus())
   </div>
