@@ -5,16 +5,12 @@
     #foreach($output in $outputs)
       #set($outputId = $counter.next())
       #set($index = $foreach.index + 1)
-      #set($isHavingWarnings = false)
-	    #foreach($_sanitize_message in $output.getMessages())
-	      #if ($_sanitize_message.contains(" WARN ")) #set($isHavingWarnings = true) #end
-	    #end
       <div class="output indention">
-        <div data-toggle="collapse" class="#if ($isPassed && !$isHavingWarnings) collapsed #end collapsable-control" data-target="#output-$outputId">
+        <div data-toggle="collapse" class="#if ($isPassed) collapsed #end collapsable-control" data-target="#output-$outputId">
           Output $index
           <i class="chevron fa fa-fw"></i>
         </div>
-        <div id="output-$outputId" class="collapse collapsable-details #if (!$isPassed || $isHavingWarnings) in #end" #if (!$isPassed || $isHavingWarnings) aria-expanded="true" #end>
+        <div id="output-$outputId" class="collapse collapsable-details #if (!$isPassed) in #end" #if (!$isPassed) aria-expanded="true" #end>
           #**
            * DO NOT format the line below. Whitespace nodes are significant in a pre-block.
            *#
