@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -21,7 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import net.masterthought.cucumber.generators.AbstractPage;
 import net.masterthought.cucumber.generators.ErrorPage;
 import net.masterthought.cucumber.generators.FailuresOverviewPage;
 import net.masterthought.cucumber.generators.FeatureReportPage;
@@ -94,8 +92,7 @@ public class ReportBuilder {
                 trends = updateAndSaveTrends(reportable);
             }
 
-            List<AbstractPage> pages = collectPages(trends);
-            generatePages(pages);
+            generatePages(trends);
 
             return reportable;
 
@@ -147,32 +144,22 @@ public class ReportBuilder {
         }
     }
 
-    private List<AbstractPage> collectPages(Trends trends) {
-        List<AbstractPage> pages = new ArrayList<>();
-
-        pages.add(new FeaturesOverviewPage(reportResult, configuration));
+    private void generatePages(Trends trends) {
+        new FeaturesOverviewPage(reportResult, configuration).generatePage();
         for (Feature feature : reportResult.getAllFeatures()) {
-            pages.add(new FeatureReportPage(reportResult, configuration, feature));
+            new FeatureReportPage(reportResult, configuration, feature).generatePage();
         }
 
-        pages.add(new TagsOverviewPage(reportResult, configuration));
+        new TagsOverviewPage(reportResult, configuration).generatePage();
         for (TagObject tagObject : reportResult.getAllTags()) {
-            pages.add(new TagReportPage(reportResult, configuration, tagObject));
+            new TagReportPage(reportResult, configuration, tagObject).generatePage();
         }
 
-        pages.add(new StepsOverviewPage(reportResult, configuration));
-        pages.add(new FailuresOverviewPage(reportResult, configuration));
+        new StepsOverviewPage(reportResult, configuration).generatePage();
+        new FailuresOverviewPage(reportResult, configuration).generatePage();
 
         if (configuration.isTrendsStatsFile()) {
-            pages.add(new TrendsOverviewPage(reportResult, configuration, trends));
-        }
-
-        return pages;
-    }
-
-    private void generatePages(List<AbstractPage> pages) {
-        for (AbstractPage page : pages) {
-            page.generatePage();
+            new TrendsOverviewPage(reportResult, configuration, trends).generatePage();
         }
     }
 

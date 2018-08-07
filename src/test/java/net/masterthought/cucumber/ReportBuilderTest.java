@@ -213,39 +213,6 @@ public class ReportBuilderTest extends ReportGenerator {
     }
 
     @Test
-    public void collectPages_CollectsPages() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-
-        ReportBuilder builder = new ReportBuilder(jsonReports, configuration);
-        Deencapsulation.setField(builder, "reportResult", new ReportResult(features, configuration.getSortingMethod()));
-
-        // when
-        List<AbstractPage> pages = Deencapsulation.invoke(builder, "collectPages", new Trends());
-
-        // then
-        assertThat(pages).hasSize(9);
-    }
-
-    @Test
-    public void collectPages_OnExistingTrendsFile_CollectsPages() {
-
-        // given
-        setUpWithJson(SAMPLE_JSON);
-        configuration.setTrendsStatsFile(trendsFileTmp);
-
-        ReportBuilder builder = new ReportBuilder(jsonReports, configuration);
-        Deencapsulation.setField(builder, "reportResult", new ReportResult(features, configuration.getSortingMethod()));
-
-        // when
-        List<AbstractPage> pages = Deencapsulation.invoke(builder, "collectPages", new Trends());
-
-        // then
-        assertThat(pages).hasSize(10);
-    }
-
-    @Test
     public void generatePages_CallsGeneratePagesOverPassedPages() {
 
         // given
