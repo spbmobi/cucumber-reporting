@@ -18,6 +18,9 @@
           <li role="presentation" #if($active_tab == "trends")  class="active" #end><a href="overview-trends.html">Trends</a></li>
         #end
         <li role="presentation" #if($active_tab == "failures") class="active" #end><a href="overview-failures.html">Failures</a></li>
+        #if (!$file_sats.isEmpty())
+          <li #if (!$bug_instances.isEmpty()) style="background-color: #F2928C;" #end role="presentation" #if($active_tab == "spotbugs") class="active" #end><a href="overview-spotbugs.html">SpotBugs</a></li>
+      	#end
       </ul>
     </div>
   </div>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  #parse("/templates/headers.vm")
+  #includeTitle("SpotBugs Overview")
+
+  <script type="text/javascript">
+  #parse("/templates/js/steps-chart.js.vm")
+  #parse("/templates/js/scenarios-chart.js.vm")
+  </script>
+</head>
+
+<body>
+
+#includeNavigation("spotbugs")
+
+#includeReportInfo()
+
+#includeLink("SpotBugs report", "For updating this page locally, do not forget use 'maven clean' and 'maven compile' command", "https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html", "Bug descriptions")
+
+#if(!$all_bugs.isEmpty())
+ #includeLead("Bugs")
+ <div class="container-fluid" id="report">
+   <div class="row">
+     <div class="col-md-10 col-md-offset-1">
+       <table id="tablesorter" class="stats-table table-hover">
+
+         <thead>
+           <tr class="header">
+             <th>Type</th>
+             <th>Category</th>
+             <th>Message</th>
+             <th>Class</th>
+             <th>Line</th>
+           </tr>
+         </thead>
+
+         <tbody>
+           #foreach($bug in $all_bugs)
+             <tr>
+               <td class="tagname">$bug.getType()</td>
+               <td>$bug.getCategory()</td>
+               <td class="location">$bug.getMessage()</td>
+               <td class="location">$bug.getClassName()</td>
+               <td>$bug.getLineNumber()</td>
+             </tr>
+           #end
+         </tbody>
+       </table>
+     </div>
+   </div>
+ </div>
+#else
+
+#includeLead("No bugs were found")
+
+#end
+
+#includeLead("Full SpotBugs report")
+
+<div class="container-fluid" id="report">
+   <div class="row">
+     <div class="col-md-10 col-md-offset-1">
+       <table id="tablesorter" class="stats-table table-hover">
+
+         <thead>
+           <tr class="header">
+             <th>Path</th>
+             <th>Size</th>
+             <th>Bug count</th>
+           </tr>
+         </thead>
+
+         <tbody>
+           #foreach($file_stat in $file_stats)
+             <tr #if ($file_stat.getBugCount() != 0) style="background-color: #F2928C;" #else style="background-color: #92DD96;" #end>
+               <td class="location">$file_stat.getPath()</td>
+               <td>$file_stat.getSize()</td>
+               <td>$file_stat.getBugCount()</td>
+             </tr>
+           #end
+         </tbody>
+       </table>
+     </div>
+   </div>
+ </div>
+
+#include("/templates/footer.vm")
+
+</body>
+</html>

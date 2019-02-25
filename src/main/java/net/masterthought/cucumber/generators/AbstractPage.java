@@ -116,5 +116,8 @@ public abstract class AbstractPage {
                 LOG.info("Could not parse build number: {}.", configuration.getBuildNumber());
             }
         }
+
+        context.put("bug_instances", reportResult.getAllBugInstances());
+        context.put("file_sats", reportResult.getFileStats());
     }
 }

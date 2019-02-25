@@ -24,12 +24,15 @@ import net.masterthought.cucumber.generators.ErrorPage;
 import net.masterthought.cucumber.generators.FailuresOverviewPage;
 import net.masterthought.cucumber.generators.FeatureReportPage;
 import net.masterthought.cucumber.generators.FeaturesOverviewPage;
+import net.masterthought.cucumber.generators.SpotBugsOverviewPage;
 import net.masterthought.cucumber.generators.StepsOverviewPage;
 import net.masterthought.cucumber.generators.TagReportPage;
 import net.masterthought.cucumber.generators.TagsOverviewPage;
 import net.masterthought.cucumber.generators.TrendsOverviewPage;
 import net.masterthought.cucumber.json.Feature;
 import net.masterthought.cucumber.json.support.TagObject;
+import net.masterthought.cucumber.xml.BugInstance;
+import net.masterthought.cucumber.xml.FileStats;
 
 public class ReportBuilder {
 
@@ -53,6 +56,8 @@ public class ReportBuilder {
 
     private Configuration configuration;
     private List<String> jsonFiles;
+    private String spotBugsBugsReport;
+    private String spotBugsFullReport;
 
     /**
      * Flag used to detect if the file with updated trends is saved.
@@ -65,6 +70,12 @@ public class ReportBuilder {
         this.jsonFiles = jsonFiles;
         this.configuration = configuration;
         reportParser = new ReportParser(configuration);
+    }
+
+    public ReportBuilder(List<String> jsonFiles, String spotBugsBugsReport, String spotBugsFullReport, Configuration configuration) {
+        this(jsonFiles, configuration);
+        this.spotBugsBugsReport = spotBugsBugsReport;
+        this.spotBugsFullReport = spotBugsFullReport;
     }
 
     /**
@@ -84,7 +95,9 @@ public class ReportBuilder {
 
             // parse json files for results
             List<Feature> features = reportParser.parseJsonFiles(jsonFiles);
-            reportResult = new ReportResult(features, configuration.getSortingMethod());
+            List<BugInstance> bugInstances = reportParser.parseSpotBugsBugsReport(spotBugsBugsReport);
+            List<FileStats> fileStats = reportParser.parseSpotBugsFullReport(spotBugsFullReport);
+            reportResult = new ReportResult(features, bugInstances, fileStats, configuration.getSortingMethod());
             Reportable reportable = reportResult.getFeatureReport();
 
             if (configuration.isTrendsStatsFile()) {
@@ -157,6 +170,7 @@ public class ReportBuilder {
 
         new StepsOverviewPage(reportResult, configuration).generatePage();
         new FailuresOverviewPage(reportResult, configuration).generatePage();
+        new SpotBugsOverviewPage(reportResult, configuration).generatePage();
 
         if (configuration.isTrendsStatsFile()) {
             new TrendsOverviewPage(reportResult, configuration, trends).generatePage();

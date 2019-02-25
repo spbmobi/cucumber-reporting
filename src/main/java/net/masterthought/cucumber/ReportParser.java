@@ -18,6 +18,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.masterthought.cucumber.json.Feature;
+import net.masterthought.cucumber.xml.BugInstance;
+import net.masterthought.cucumber.xml.FileStats;
+import net.masterthought.cucumber.xml.deserializer.SpotBugsDeserializer;
 
 /**
  * @author Damian Szczepanik (damianszczepanik@github)
@@ -96,5 +99,13 @@ public class ReportParser {
         for (Feature feature : features) {
             feature.setMetaData(jsonFile, jsonFileNo, configuration);
         }
+    }
+
+    public List<BugInstance> parseSpotBugsBugsReport(String xmlFile) {
+        return SpotBugsDeserializer.deserializeBugsReport(xmlFile);
+    }
+
+    public List<FileStats> parseSpotBugsFullReport(String xmlFile) {
+        return SpotBugsDeserializer.deserializeFullReport(xmlFile);
     }
 }

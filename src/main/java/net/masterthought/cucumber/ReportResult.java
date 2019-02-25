@@ -23,10 +23,14 @@ import net.masterthought.cucumber.json.support.StepObject;
 import net.masterthought.cucumber.json.support.TagObject;
 import net.masterthought.cucumber.sorting.SortingFactory;
 import net.masterthought.cucumber.sorting.SortingMethod;
+import net.masterthought.cucumber.xml.BugInstance;
+import net.masterthought.cucumber.xml.FileStats;
 
 public class ReportResult {
 
     private final List<Feature> allFeatures = new ArrayList<>();
+    private final List<BugInstance> allBugInstances = new ArrayList<>();
+    private final List<FileStats> fileStats = new ArrayList<>();
     private final Map<String, TagObject> allTags = new TreeMap<>();
     private final Map<String, StepObject> allSteps = new TreeMap<>();
 
@@ -46,6 +50,22 @@ public class ReportResult {
         for (Feature feature : features) {
             processFeature(feature);
         }
+    }
+
+    public ReportResult(List<Feature> features, List<BugInstance> bugInstances, List<FileStats> fileStats, SortingMethod sortingMethod) {
+        this(features, sortingMethod);
+        if (bugInstances != null)
+            allBugInstances.addAll(bugInstances);
+        if (fileStats != null)
+            this.fileStats.addAll(fileStats);
+    }
+
+    public List<BugInstance> getAllBugInstances() {
+        return allBugInstances;
+    }
+
+    public List<FileStats> getFileStats() {
+        return fileStats;
     }
 
     public List<Feature> getAllFeatures() {
