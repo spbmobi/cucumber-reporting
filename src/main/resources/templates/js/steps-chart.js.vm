@@ -21,8 +21,8 @@ $(document).ready(function() {
 					'start',
 					'start',
 					'center',
-					'center',
-					'end'
+					'end',
+					'center'
 				]
 			}
         }],
@@ -63,7 +63,8 @@ $(document).ready(function() {
                 fontSize: 20,
                 text: "Steps"
             },
-            responsive: true,
+            rotation: Math.PI * 2,
+            responsive: false,
             legend: {
                 display: false
             },

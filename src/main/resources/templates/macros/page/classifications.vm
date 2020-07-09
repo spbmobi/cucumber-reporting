@@ -7,7 +7,12 @@
       #set($_sanitize_value = $classification.getValue())
       <tr class="info">
         <th>$key</th>
-        <td>$_sanitize_value</td>
+        <td #if ($_sanitize_value.contains("nextgen"))
+        		#if ($_sanitize_value.contains("clean")) style="background-color: #92DD96;" #end
+        		#if ($_sanitize_value.contains("dirty")) style="background-color: #F2928C;" #end
+			#end>
+          $_sanitize_value
+        </td>
       </tr>
     #end
   </tbody>

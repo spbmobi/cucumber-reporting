@@ -49,7 +49,7 @@ $(document).ready(function() {
                 text: "Scenarios"
             },
             rotation: Math.PI,
-            responsive: true,
+            responsive: false,
             legend: {
                 display: false
             },
